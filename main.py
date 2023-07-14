@@ -1,37 +1,83 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from Instrucao import Instrucao
-from TipoR import TipoR
+from Instrucoes.TipoI import TipoI
+from Instrucoes.TipoR import TipoR
+from Instrucoes.TipoS import TipoS
+
+instrucoes = { 
+    "tipo_R": ['add', 'sub', 'sll', 'slt', 'sltu','xor', 'srl', 'sra', 'or',  'and'],
+    "tipo_I": ['jalr', 'lb', 'lh', 'lw', 'lbu', 'lhu', 'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi'],
+    "tipo_S": ['sb', 'sh', 'sw'],
+    "tipo_B": ['beq', 'bne', 'blt', 'bge', 'bltu','bgeu']
+}
 
 def informacao():
     messagebox.showinfo("Info", "Operações aceitas:\n" +
-                        "Tipo R: add, sub e and\n" +
-                        "Tipo I: addi\n" +
-                        "Tipo S: sw e lw\n" +
+                        "Tipo R \n" +
+                        "Tipo I \n" +
+                        "Tipo S \n" +
                         "\n")
+    
+
+def show_custom_message(title, message, width, height):
+    root = tk.Tk()
+    root.withdraw()  # Esconde a janela principal
+
+    # Cria uma janela personalizada
+    dialog = tk.Toplevel(root)
+    dialog.title(title)
+    dialog.geometry(f"{width}x{height}")
+
+    # Adiciona um rótulo para exibir a mensagem
+    label = tk.Label(dialog, text=message, wraplength=width-50)
+    label.pack(padx=20, pady=20)
+
+    # Centraliza a janela personalizada na tela
+    screen_width = dialog.winfo_screenwidth()
+    screen_height = dialog.winfo_screenheight()
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+    dialog.geometry(f"+{x}+{y}")
+
+    # Executa a janela personalizada
+    return dialog
+
 def converter():
     # Obter o valor digitado na caixa de texto
     texto = entry.get()
+    
+    mneumonico = (texto.split(","))[0].split(" ")[0].lower()
 
-
-    print("Texto recebido: " + texto)
-
-    tipo_R = ['add', 'sub', 'and']
-    tipo_I = ['addi']
-    tipo_S = ['sw', 'lw']
-
-
-    if texto[:3] in tipo_R:
-        instrucao = TipoR(texto)
-    else:
+    try:
+        if mneumonico in instrucoes["tipo_R"]:
+            instrucao = TipoR(texto)
+        elif mneumonico in instrucoes["tipo_I"]:
+            instrucao = TipoI(texto)
+        elif mneumonico in instrucoes["tipo_S"]:
+            instrucao = TipoS(texto)
+        else:
+            messagebox.showinfo("Conversor RISC-V para Binário",
+                                "Instrução Inválida!")
+            return
+        
+        codigo_binario = str(instrucao)
+        dialog = show_custom_message("Conversor RISC-V para Binário", 
+                                     f"Campos: \n\n{codigo_binario}", 
+                                     width=400, 
+                                     height=200)
+        
+        dialog.grab_set()  # Bloquear interação com a janela principal enquanto a janela personalizada estiver aberta
+        
+        # Loop para atualizar a janela principal e aguardar o fechamento da janela personalizada
+        while dialog.winfo_exists():
+            window.update()
+    except TypeError:
         messagebox.showinfo("Conversor RISC-V para Binário",
-                            "Instrução Inválida!")
-        return
-
-    codigo_binario = instrucao.converter()
-    messagebox.showinfo("Conversor RISC-V para Binário",
-                        "Código em Binário:\n\n" + codigo_binario)
+                                "Formatação Inválida!")
+    except ValueError:
+        messagebox.showinfo("Conversor RISC-V para Binário",
+                                "Imediato deve ser inteiro positivo de 12 bits (max 4095)!")
 
 # Criação da janela principal
 window = tk.Tk()
@@ -74,7 +120,15 @@ integrantes_label = tk.Label(window, text="Integrantes do grupo:\n"
                                           "Henrique Souza Marques - 11815722\n"
                                           "Eduardo Neves Gomes da Silva - 13822710\n"
                                           "Vinicius Carneiro Macedo - 11915752", anchor="se")
-integrantes_label.pack(side="bottom", padx=10, pady=10, anchor="se")
+integrantes_label.place(relx=0.5, rely=1.0, anchor=tk.S)
+
+
+def on_close():
+    if messagebox.askokcancel("Sair", "Deseja sair do aplicativo?"):
+        window.quit()
+
+# Configura a função on_close para ser chamada quando a janela for fechada
+window.protocol("WM_DELETE_WINDOW", on_close)
 
 # Executa o loop principal da janela
 window.mainloop()
