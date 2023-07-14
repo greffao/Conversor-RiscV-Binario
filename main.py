@@ -4,12 +4,16 @@ from tkinter import messagebox
 from Instrucoes.TipoI import TipoI
 from Instrucoes.TipoR import TipoR
 from Instrucoes.TipoS import TipoS
+from Instrucoes.TipoJ import TipoJ
+from Instrucoes.TipoU import TipoU
 
 instrucoes = { 
     "tipo_R": ['add', 'sub', 'sll', 'slt', 'sltu','xor', 'srl', 'sra', 'or',  'and'],
     "tipo_I": ['jalr', 'lb', 'lh', 'lw', 'lbu', 'lhu', 'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi'],
     "tipo_S": ['sb', 'sh', 'sw'],
-    "tipo_B": ['beq', 'bne', 'blt', 'bge', 'bltu','bgeu']
+    "tipo_B": ['beq', 'bne', 'blt', 'bge', 'bltu','bgeu'],
+    "tipo_J": ['jal'],
+    "tipo_U": ['lui', 'auipc']
 }
 
 def informacao():
@@ -56,6 +60,10 @@ def converter():
             instrucao = TipoI(texto)
         elif mneumonico in instrucoes["tipo_S"]:
             instrucao = TipoS(texto)
+        elif mneumonico in instrucoes["tipo_J"]:
+            instrucao = TipoJ(texto)
+        elif mneumonico in instrucoes["tipo_U"]:
+            instrucao = TipoU(texto)
         else:
             messagebox.showinfo("Conversor RISC-V para Binário",
                                 "Instrução Inválida!")
@@ -77,7 +85,7 @@ def converter():
                                 "Formatação Inválida!")
     except ValueError:
         messagebox.showinfo("Conversor RISC-V para Binário",
-                                "Imediato deve ser inteiro positivo de 12 bits (max 4095)!")
+                                "Imediato deve ser inteiro positivo!")
 
 # Criação da janela principal
 window = tk.Tk()

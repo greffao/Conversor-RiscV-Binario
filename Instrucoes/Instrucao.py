@@ -84,6 +84,11 @@ class Instrucao:
         partes = list(map(str.strip, self.get_partes()))
 
         return partes[0].split(" ")[1]
+
+    def get_unico_imm(self):
+        partes = list(self.instrucao.split(" "))
+
+        return partes[1]
     
     def get_segundo_reg(self):
         return (self.get_partes()[1]).strip()   
