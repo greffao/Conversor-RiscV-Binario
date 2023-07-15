@@ -6,6 +6,7 @@ from Instrucoes.TipoR import TipoR
 from Instrucoes.TipoS import TipoS
 from Instrucoes.TipoJ import TipoJ
 from Instrucoes.TipoU import TipoU
+from Instrucoes.TipoB import TipoB
 
 instrucoes = { 
     "tipo_R": ['add', 'sub', 'sll', 'slt', 'sltu','xor', 'srl', 'sra', 'or',  'and'],
@@ -21,6 +22,9 @@ def informacao():
                         "Tipo R \n" +
                         "Tipo I \n" +
                         "Tipo S \n" +
+                        "Tipo B \n" +
+                        "Tipo U \n" +
+                        "Tipo J \n" +
                         "\n")
     
 
@@ -64,6 +68,8 @@ def converter():
             instrucao = TipoJ(texto)
         elif mneumonico in instrucoes["tipo_U"]:
             instrucao = TipoU(texto)
+        elif mneumonico in instrucoes["tipo_B"]:
+            instrucao = TipoB(texto)
         else:
             messagebox.showinfo("Conversor RISC-V para Binário",
                                 "Instrução Inválida!")
