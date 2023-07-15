@@ -17,6 +17,13 @@ A RISC-V é uma arquitetura de conjunto de instruções livres que faz a comunic
 
 Nesta seção, será apresentado o método utilizado por nós para agilizar o processo de verificação e interpretação das instruções convertidas para binário. Optamos por utilizar a linguagem de programação Python para gerar nosso programa, onde mapeamos os tipos e suas instruções. Os tipos mapeados foram: B, I, J, R, S e U. Cada membro ficou responsável por desenvolver a parte do código que trata cada tipo, assim desenvolvendo funcionalidades que convertem os conjuntos de instruções para binário e os divide e explica conforme determina a arquitetura RISC-V.
 
+**Instrução em Assembly RISC-V** <br>
+![Instrucao em Assembly RISC-V](figures/figure1.png "Instrução em Assembly RISC-V") <br> <br>
+
+**Instrução em Binário** <br>
+![Instrucao em Binario](figures/figure2.png "Instrução em Binário") <br>
+
+
 ### Conclusão
 
 Construímos uma aplicação em Python capaz de converter instruções da RiscV para binário e separar essa sequência em partes correspondentes às características de cada instrução.
