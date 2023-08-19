@@ -7,6 +7,8 @@ Vinicius Carneiro Macedo - 11915752 <br> <br>
 Institute of Mathematical and Computer Sciences <br>
 University of São Paulo* <br>
 
+**Keywords:** Assembly, Computer Architecture and Organization, Desktop Application Development, Object-Oriented Programming, Python.
+
 **Abstract:** This monograph aims to present the second practical project of the Computer Organization and Architecture course. Among the proposed topics and challenges faced by the group participants, we decided to develop an application that converts certain RISC-V instructions into their respective binary codes.
 
 ### Introduction
